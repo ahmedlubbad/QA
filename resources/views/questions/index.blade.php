@@ -1,6 +1,7 @@
 @extends('layouts.default')
 @section('title')
-    Questions <a href="{{ route('questions.create') }}" class="btn btn-outline-primary btn-sm">New Question</a>
+    {{__('Questions')}} <a href="{{ route('questions.create') }}"
+                           class="btn btn-outline-primary btn-sm">{{__('New Question')}}</a>
 @endsection
 @section('content')
     @if(session()->has('success'))
@@ -16,7 +17,7 @@
                 </h5>
                 <div class="mb-4 text-muted">
                     @lang('Asked'): {{$question->created_at->diffForHumans()}},
-                    {{trans('By')}}By: {{$question->user->name}},
+                    {{trans('By')}}: {{$question->user->name}},
                     {{__('Answers')}} : {{$question->answers_count}}</div>
                 <p class="card-text">{{Str::words($question->description,30)}}</p>
                 <div>
@@ -28,12 +29,12 @@
                     <div class="d-flex">
                         <div>
                             <a href="{{route('questions.edit',['question'=>$question->id])}}"
-                               class="btn btn-outline-dark btn-sm">Edit</a>
+                               class="btn btn-outline-dark btn-sm">{{__("Edit")}}</a>
                         </div>
                         <form action="{{route('questions.destroy',['question'=>$question->id])}}" method="post">
                             @csrf
                             @method('delete')
-                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            <button type="submit" class="btn btn-sm btn-danger">{{__("Delete")}}</button>
                         </form>
                     </div>
                 </div>

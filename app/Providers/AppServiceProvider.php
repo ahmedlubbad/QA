@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
@@ -36,5 +37,7 @@ class AppServiceProvider extends ServiceProvider
         }, 'this word is not allowed');
 
         Paginator::useBootstrap();
+        $lang = request('lang',config('app.locale'));
+        App::setLocale($lang);
     }
 }

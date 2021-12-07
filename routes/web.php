@@ -28,7 +28,7 @@ require __DIR__ . '/auth.php';
 require __DIR__ . '/tag.php';
 
 Route::resource('questions', QuestionsController::class);
-Route::get('profile', [UserProfileController::class, 'edit'])->name('profile');
+Route::get('profile', [UserProfileController::class, 'edit'])->name('profile')->middleware('auth');
 Route::put('profile', [UserProfileController::class, 'update']);
 Route::post('answers', [AnswersController::class, 'store'])->name('answers.store')->middleware('auth');
 Route::put('answers/{id}/best', [AnswersController::class, 'best'])->name('answers.best')->middleware('auth');

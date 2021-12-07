@@ -3,5 +3,18 @@
     "Asked": "طرحت ",
     "Answers": "الإجابات",
     "Title": "العنوان",
-    "New Question": "سؤال جديد"
+    "New Question": "سؤال جديد",
+    "Edit": "تعديل",
+    "Delete": "حذف",
+    "First Name": "الإسم الأول",
+    "Last Name": "الإسم الأخير",
+    "Email Address": "عنوان الإيميل",
+    "Birthday": "تاريخ الميلاد",
+    "Male": "ذكر",
+    "Gender": "الجنس",
+    "Female": "أنثى",
+    "City": "المدينة",
+    "Country": "الدولة",
+    "Profile Photo": "الصورة الشخصية",
+    "Update Profile": "تحديث الصفحة الشخصية"
 }

@@ -1,13 +1,16 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{App::currentLocale()}}" dir="{{App::currentLocale() == 'ar' ? 'rtl' : 'ltr'}}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/headers.css">
+    @if(App::currentLocale()=='ar')
+        <link rel="stylesheet" href="{{asset('css/bootstrap.rtl.min.css')}}">
+    @else
+        <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
+    @endif
+    <link rel="stylesheet" href="{{asset('css/headers.css')}}">
     <title>{{config('app.name')}}</title>
 </head>
 <body>
@@ -25,27 +28,43 @@
                 <li><a href="#" class="nav-link px-2 link-dark">Inventory</a></li>
                 <li><a href="#" class="nav-link px-2 link-dark">Customers</a></li>
                 <li><a href="#" class="nav-link px-2 link-dark">Products</a></li>
+                @guest
+                    <li><a href="{{route('login')}}" class="btn btn-outline-primary btn-sm m-1">login</a></li>
+                    <li><a href="{{route('register')}}" class="btn btn-outline-primary btn-sm  m-1">register</a></li>
+                @endguest
             </ul>
 
             <form method="get" action="{{route('questions.index')}}" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
                 <input type="search" name="search" class="form-control" placeholder="Search..." aria-label="Search">
             </form>
 
-            <div class="dropdown text-end">
-                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
-                   data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-                </a>
-                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                    <li><a class="dropdown-item" href="#">New project...</a></li>
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="#">Sign out</a></li>
-                </ul>
-            </div>
+            @auth
+                <div class="dropdown text-end">
+                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        <img
+                            src="@auth {{asset('storage/'.Auth::user()->profile_photo_path)}} @else {{asset('storage/profile-photos/default-user-profile.png')}} @endauth "
+                            alt="mdo" width="32" height="32" class="rounded-circle">
+                    </a>
+                    <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                        <li><a class="dropdown-item" href="{{route('questions.create')}}">New Question...</a></li>
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" href="{{route('profile')}}">Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        @auth
+                            <li>
+                                <form action="{{route('logout')}}" method="post">
+                                    @csrf
+                                    <button class="dropdown-item" type="submit">Sign out</button>
+
+                                </form>
+                            </li>
+                        @endauth
+                    </ul>
+                </div>
+            @endauth
         </div>
     </div>
 </header>
@@ -54,7 +73,7 @@
         <h2>@yield('title', 'Page Title')</h2>
         <hr>
     </header>
-
+    <script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
     @yield('content')
 </div>
 </body>

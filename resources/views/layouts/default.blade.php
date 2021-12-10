@@ -18,26 +18,43 @@
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
-                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
-                    <use xlink:href="#bootstrap"/>
-                </svg>
+                {{--                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">--}}
+                {{--                    <use xlink:href="#bootstrap"/>--}}
+                {{--                </svg>--}}
+                <img src="{{asset('storage/QA.png')}}" class="bi me-2" width="40" height="40" role="img">
             </a>
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#" class="nav-link px-2 link-secondary">Overview</a></li>
+                <li><a href="http://localhost:8000/" class="nav-link px-2 link-secondary">Overview</a></li>
                 <li><a href="#" class="nav-link px-2 link-dark">Inventory</a></li>
                 <li><a href="#" class="nav-link px-2 link-dark">Customers</a></li>
-                <li><a href="#" class="nav-link px-2 link-dark">Products</a></li>
+                <li><a href="{{route('questions.index')}}" class="nav-link px-2 link-dark">Questions</a></li>
+                <li><a href="{{route('tags.index')}}" class="nav-link px-2 link-dark">Tags</a></li>
                 @guest
-                    <li><a href="{{route('login')}}" class="btn btn-outline-primary btn-sm m-1">login</a></li>
-                    <li><a href="{{route('register')}}" class="btn btn-outline-primary btn-sm  m-1">register</a></li>
+                    <li><a href="{{route('login')}}" class="btn btn-outline-primary btn-sm m-1">{{__('login')}}</a></li>
+                    <li><a href="{{route('register')}}"
+                           class="btn btn-outline-primary btn-sm  m-1">{{__('register')}}</a></li>
                 @endguest
             </ul>
 
             <form method="get" action="{{route('questions.index')}}" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                <input type="search" name="search" class="form-control" placeholder="Search..." aria-label="Search">
+                <input type="search" name="search" class="form-control" placeholder="{{__('Search')}}..."
+                       aria-label="Search">
             </form>
 
+            <div class="dropdown text-end">
+                <a href="#" class="d-block m-2 link-dark text-decoration-none dropdown-toggle" id="locale"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    {{--                    {{__('Language')}}--}}
+                    {{LaravelLocalization::getCurrentLocaleNative()}}
+                </a>
+                <ul class="dropdown-menu text-small" aria-labelledby="locale">
+                    @foreach(LaravelLocalization::getSupportedLocales() as $code => $locale)
+                        <li><a class="dropdown-item"
+                               href="{{LaravelLocalization::getLocalizedURL($code)}}">{{$locale['native']}}</a></li>
+                    @endforeach
+                </ul>
+            </div>
             @auth
                 <div class="dropdown text-end">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
@@ -47,9 +64,10 @@
                             alt="mdo" width="32" height="32" class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                        <li><a class="dropdown-item" href="{{route('questions.create')}}">New Question...</a></li>
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
-                        <li><a class="dropdown-item" href="{{route('profile')}}">Profile</a></li>
+                        <li><a class="dropdown-item" href="{{route('questions.create')}}">{{__('New Question')}}...</a>
+                        </li>
+                        <li><a class="dropdown-item" href="#">{{__('Settings')}}</a></li>
+                        <li><a class="dropdown-item" href="{{route('profile')}}">{{__('Profile')}}</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -57,7 +75,7 @@
                             <li>
                                 <form action="{{route('logout')}}" method="post">
                                     @csrf
-                                    <button class="dropdown-item" type="submit">Sign out</button>
+                                    <button class="dropdown-item" type="submit">{{__('Sign out')}}</button>
 
                                 </form>
                             </li>

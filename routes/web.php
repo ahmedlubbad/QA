@@ -3,7 +3,10 @@
 use App\Http\Controllers\AnswersController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Middleware\Localization;
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,20 +18,28 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::group([
+    'prefix' => LaravelLocalization::setLocale(),
+    'middleware' => ['localizationRedirect', 'localeViewPath']
 
-Route::get('/', function () {
-    return view('welcome');
-});
+],
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+    function () {
+        Route::get('/', function () {
+            return view('welcome');
+        });
 
-require __DIR__ . '/auth.php';
-require __DIR__ . '/tag.php';
+        Route::get('/dashboard', function () {
+            return view('dashboard');
+        })->middleware(['auth'])->name('dashboard');
 
-Route::resource('questions', QuestionsController::class);
-Route::get('profile', [UserProfileController::class, 'edit'])->name('profile')->middleware('auth');
-Route::put('profile', [UserProfileController::class, 'update']);
-Route::post('answers', [AnswersController::class, 'store'])->name('answers.store')->middleware('auth');
-Route::put('answers/{id}/best', [AnswersController::class, 'best'])->name('answers.best')->middleware('auth');
+        require __DIR__ . '/auth.php';
+        require __DIR__ . '/tag.php';
+
+        Route::resource('questions', QuestionsController::class);
+        Route::get('profile', [UserProfileController::class, 'edit'])->name('profile')->middleware('auth');
+        Route::put('profile', [UserProfileController::class, 'update']);
+        Route::post('answers', [AnswersController::class, 'store'])->name('answers.store')->middleware('auth');
+        Route::put('answers/{id}/best', [AnswersController::class, 'best'])->name('answers.best')->middleware('auth');
+
+    });

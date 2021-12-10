@@ -16,5 +16,12 @@
     "City": "المدينة",
     "Country": "الدولة",
     "Profile Photo": "الصورة الشخصية",
-    "Update Profile": "تحديث الصفحة الشخصية"
+    "Update Profile": "تحديث الصفحة الشخصية",
+    "Language": "اللغة",
+    "login": "تسجيل دخول",
+    "register": "تسجيل",
+    "Search": "بحث",
+    "By": "بواسطة",
+    "Sign out": "تسجيل الخروج",
+    "Profile": "الملف الشخصي"
 }

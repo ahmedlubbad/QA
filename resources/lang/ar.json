@@ -23,5 +23,7 @@
     "Search": "بحث",
     "By": "بواسطة",
     "Sign out": "تسجيل الخروج",
-    "Profile": "الملف الشخصي"
+    "New Answer": "إجابة جديدة",
+    ":user add answer to your question \":question\"": "قام :user بالإجابة على سؤالك :question",
+    "View Answer": "عرض الإجابة"
 }

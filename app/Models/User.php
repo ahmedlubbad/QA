@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable //implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, HasLocalePreference
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -41,6 +42,7 @@ class User extends Authenticatable //implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'notification_options' => 'json',
     ];
 
     public function questions()
@@ -56,5 +58,23 @@ class User extends Authenticatable //implements MustVerifyEmail
     public function profile()
     {
         return $this->hasOne(Profile::class, 'user_id', 'id')->withDefault();
+    }
+
+    /*اذا كان حقل الاميمل اسمه بختلف*/
+    public function routeNotificationForMail($notification = null)
+    {
+        return $this->email;
+    }
+
+//localize notification
+    public function preferredLocale()
+    {
+        return $this->language;
+    }
+
+    /*اذا كان حقل الجوال اسمه بختلف*/
+    public function routeNotificationForNexmo($notification = null)
+    {
+        return $this->mobile;
     }
 }

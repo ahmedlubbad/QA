@@ -27,7 +27,7 @@
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="http://localhost:8000/" class="nav-link px-2 link-secondary">Overview</a></li>
                 <li><a href="#" class="nav-link px-2 link-dark">Inventory</a></li>
-                <li><a href="#" class="nav-link px-2 link-dark">Customers</a></li>
+                <li><a href="{{route('notifications')}}" class="nav-link px-2 link-dark">Notifications</a></li>
                 <li><a href="{{route('questions.index')}}" class="nav-link px-2 link-dark">Questions</a></li>
                 <li><a href="{{route('tags.index')}}" class="nav-link px-2 link-dark">Tags</a></li>
                 @guest
@@ -42,10 +42,11 @@
                        aria-label="Search">
             </form>
 
+            {{--            mcamara-localization--}}
             <div class="dropdown text-end">
                 <a href="#" class="d-block m-2 link-dark text-decoration-none dropdown-toggle" id="locale"
                    data-bs-toggle="dropdown" aria-expanded="false">
-                    {{--                    {{__('Language')}}--}}
+                    {{--   {{__('Language')}}   --}}
                     {{LaravelLocalization::getCurrentLocaleNative()}}
                 </a>
                 <ul class="dropdown-menu text-small" aria-labelledby="locale">
@@ -55,8 +56,11 @@
                     @endforeach
                 </ul>
             </div>
+            @auth()
+                <x-notifications-menu/>
+            @endauth
             @auth
-                <div class="dropdown text-end">
+                <div class="ms-2 dropdown text-end">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
                        data-bs-toggle="dropdown" aria-expanded="false">
                         <img

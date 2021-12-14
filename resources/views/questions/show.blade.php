@@ -3,9 +3,12 @@
     {{__('Questions')}} <a href="{{ route('questions.create') }}"
                            class="btn btn-outline-primary btn-sm">{{__('New Question')}}</a>
 @endsection
-
 @section('content')
-
+    @if(session()->has('success'))
+        <div class="alert alert-success">
+            {{session()->get('success')}}
+        </div>
+    @endif
     <div class="card mb-3">
         <div class="card-body">
             <h5 class="card-title">{{$question->title}}</h5>

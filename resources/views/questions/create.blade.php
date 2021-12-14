@@ -44,7 +44,9 @@
                 @endforeach
             </div>
         </div>
-
+        @error('tag')
+        <p class="invalid-feedback">{{$message}}</p>
+        @enderror
         <div class="form-group mb-3">
             <button type="submit" class="btn btn-primary">Ask Question</button>
         </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Answer;
 use App\Models\Question;
+use App\Notifications\NewAnswerNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,6 +19,7 @@ class AnswersController extends Controller
         $question = Question::findOrFail($request->input('question_id'));
         $request->merge(['user_id' => Auth::id()]);
         $question->answers()->create($request->all());
+        $question->user->notify(new NewAnswerNotification($question, Auth::user()));
         return redirect(route('questions.show', ['question' => $question->id]))->with('success', 'Answer add!');
     }
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnswersController;
+use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Middleware\Localization;
@@ -35,7 +36,7 @@ Route::group([
 
         require __DIR__ . '/auth.php';
         require __DIR__ . '/tag.php';
-
+        Route::get('notifications', [NotificationsController::class, 'index'])->middleware('auth')->name('notifications');
         Route::resource('questions', QuestionsController::class);
         Route::get('profile', [UserProfileController::class, 'edit'])->name('profile')->middleware('auth');
         Route::put('profile', [UserProfileController::class, 'update']);

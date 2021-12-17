@@ -63,14 +63,19 @@
                 <div class="ms-2 dropdown text-end">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <img
-                            src="@auth {{asset('storage/'.Auth::user()->profile_photo_path)}} @else {{asset('storage/profile-photos/default-user-profile.png')}} @endauth "
-                            alt="mdo" width="32" height="32" class="rounded-circle">
+                        @if(Auth::user()->profile_photo_path)
+                            <img
+                                src="{{asset('storage/'.Auth::user()->profile_photo_path)}}"
+                                width="32" height="32" class="rounded-circle">
+                        @else
+                            <img
+                                src="https://ui-avatars.com/api/?name={{Auth::user()->name}}"
+                                width="32" height="32" class="rounded-circle">
+                        @endif
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                         <li><a class="dropdown-item" href="{{route('questions.create')}}">{{__('New Question')}}...</a>
                         </li>
-                        <li><a class="dropdown-item" href="#">{{__('Settings')}}</a></li>
                         <li><a class="dropdown-item" href="{{route('profile')}}">{{__('Profile')}}</a></li>
                         <li>
                             <hr class="dropdown-divider">
@@ -95,8 +100,28 @@
         <h2>@yield('title', 'Page Title')</h2>
         <hr>
     </header>
+
+
     <script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
+    <script>
+        const userId = {{Auth::id()}};
+    </script>
+    <script src="{{asset('js/app.js')}}"></script>
     @yield('content')
+    {{--    toast message--}}
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="notificationToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <img src="" class="rounded me-2" alt="...">
+                <strong class="me-auto" id="notification-title"></strong>
+                <small id="notification-time"></small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="notification-body">
+            </div>
+        </div>
+    </div>
+
 </div>
 </body>
 </html>

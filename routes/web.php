@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnswersController;
+use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UserProfileController;
@@ -42,5 +43,7 @@ Route::group([
         Route::put('profile', [UserProfileController::class, 'update']);
         Route::post('answers', [AnswersController::class, 'store'])->name('answers.store')->middleware('auth');
         Route::put('answers/{id}/best', [AnswersController::class, 'best'])->name('answers.best')->middleware('auth');
+        Route::get('password/change', [ChangePasswordController::class, 'create'])->name('password.change')->middleware('auth');
+        Route::post('password/change', [ChangePasswordController::class, 'store'])->middleware('auth');
 
     });

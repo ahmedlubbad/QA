@@ -30,11 +30,6 @@
                 <li><a href="{{route('notifications')}}" class="nav-link px-2 link-dark">Notifications</a></li>
                 <li><a href="{{route('questions.index')}}" class="nav-link px-2 link-dark">Questions</a></li>
                 <li><a href="{{route('tags.index')}}" class="nav-link px-2 link-dark">Tags</a></li>
-                @guest
-                    <li><a href="{{route('login')}}" class="btn btn-outline-primary btn-sm m-1">{{__('login')}}</a></li>
-                    <li><a href="{{route('register')}}"
-                           class="btn btn-outline-primary btn-sm  m-1">{{__('register')}}</a></li>
-                @endguest
             </ul>
 
             <form method="get" action="{{route('questions.index')}}" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
@@ -56,6 +51,18 @@
                     @endforeach
                 </ul>
             </div>
+
+            <div>
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    @guest
+                        <li><a href="{{route('login')}}" class="btn btn-outline-primary btn-sm m-1">{{__('login')}}</a>
+                        </li>
+                        <li><a href="{{route('register')}}"
+                               class="btn btn-outline-primary btn-sm  m-1">{{__('register')}}</a></li>
+                    @endguest
+                </ul>
+            </div>
+
             @auth()
                 <x-notifications-menu/>
             @endauth
@@ -63,15 +70,9 @@
                 <div class="ms-2 dropdown text-end">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
                        data-bs-toggle="dropdown" aria-expanded="false">
-                        @if(Auth::user()->profile_photo_path)
-                            <img
-                                src="{{asset('storage/'.Auth::user()->profile_photo_path)}}"
-                                width="32" height="32" class="rounded-circle">
-                        @else
-                            <img
-                                src="https://ui-avatars.com/api/?name={{Auth::user()->name}}"
-                                width="32" height="32" class="rounded-circle">
-                        @endif
+                        <img
+                            src="{{Auth::user()->photo_url}}"
+                            width="32" height="32" class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                         <li><a class="dropdown-item" href="{{route('questions.create')}}">{{__('New Question')}}...</a>

@@ -60,6 +60,15 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         return $this->hasOne(Profile::class, 'user_id', 'id')->withDefault();
     }
 
+//    accessor
+    public function getPhotoUrlAttribute()
+    {
+        if ($this->profile_photo_path) {
+            return asset('storage/' . $this->profile_photo_path);
+        }
+        return 'https://ui-avatars.com/api/?name=' . $this->name;
+    }
+
     /*اذا كان حقل الاميمل اسمه بختلف*/
     public function routeNotificationForMail($notification = null)
     {
@@ -77,4 +86,5 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     {
         return $this->mobile;
     }
+
 }

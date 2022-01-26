@@ -62,7 +62,7 @@ class QuestionsController extends Controller
     public function show($id)
     {
         $question = Question::findOrFail($id);
-        return $question;
+        return $question->load('tags', 'user');
     }
 
     /**

@@ -25,6 +25,11 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         'profile_photo_path',
     ];
 
+    //for api
+    protected $appends = [
+        'photo_url'
+    ];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -33,6 +38,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     protected $hidden = [
         'password',
         'remember_token',
+        'profile_photo_path',
     ];
 
     /**
@@ -87,4 +93,18 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         return $this->mobile;
     }
 
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_user');
+    }
+
+    public function hasAbility($abilities)
+    {
+        foreach ($this->roles as $role) {
+            if (in_array($abilities, $role->abilities)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

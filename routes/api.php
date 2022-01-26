@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AnswersController;
+use App\Http\Controllers\Api\AuthenticationTokensController;
 use App\Http\Controllers\Api\QuestionsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 //prefix: api
-Route::apiResource('questions', QuestionsController::class);
-Route::apiResource('answers', AnswersController::class);
+Route::apiResource('questions', QuestionsController::class)->middleware('auth:sanctum');
+Route::apiResource('answers', AnswersController::class)->middleware('auth:sanctum');
+Route::post('auth/tokens', [AuthenticationTokensController::class, 'store']);
+Route::delete('auth/tokens/{token?}', [AuthenticationTokensController::class, 'destroy'])->middleware('auth:sanctum');
 

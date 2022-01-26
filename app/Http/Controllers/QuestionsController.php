@@ -6,6 +6,7 @@ use App\Models\Question;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class QuestionsController extends Controller
 {

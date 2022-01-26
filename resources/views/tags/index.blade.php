@@ -1,6 +1,11 @@
-@extends('layouts.default')
-@section('content')
-    <h2 class="mb-4">{{$title}} <a href="/tags/create" class="btn btn-outline-dark btn-xs">Add New</a></h2>
+<x-dashboard-layout>
+{{--    @extends('layouts.default')--}}
+    <x-slot name="title">
+        <h2 class="mb-4">{{$title}} <a href="/tags/create" class="btn btn-outline-dark btn-xs">Add New</a></h2>
+    </x-slot>
+    <x-slot name="breadcrumb">
+        <li class="breadcrumb-item">Tags</li>
+    </x-slot>
     @if(session()->has('success'))
         <div class="alert alert-success">
             {{session()->get('success')}}
@@ -36,4 +41,4 @@
         @endforeach
         </tbody>
     </table>
-@endsection
+</x-dashboard-layout>

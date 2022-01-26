@@ -3,7 +3,7 @@
 use App\Http\Controllers\TagsController;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['middleware' => 'auth', 'as' => 'tags.'], function () {
+Route::group(['middleware' => ['auth', 'user.type:admin,super-admin'], 'as' => 'tags.'], function () {
     Route::get('/tags', [TagsController::class, 'index'])->name('index');
     Route::get('/tags/create', [TagsController::class, 'create'])->name('create');
     Route::post('/tags', [TagsController::class, 'store'])->name('store');

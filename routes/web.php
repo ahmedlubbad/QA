@@ -4,6 +4,7 @@ use App\Http\Controllers\AnswersController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\QuestionsController;
+use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Middleware\Localization;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +40,7 @@ Route::group([
         require __DIR__ . '/tag.php';
         Route::get('notifications', [NotificationsController::class, 'index'])->middleware('auth')->name('notifications');
         Route::resource('questions', QuestionsController::class);
+        Route::resource('roles', RolesController::class)->middleware(['auth', 'user.type:admin,super-admin']);
         Route::get('profile', [UserProfileController::class, 'edit'])->name('profile')->middleware('auth');
         Route::put('profile', [UserProfileController::class, 'update']);
         Route::post('answers', [AnswersController::class, 'store'])->name('answers.store')->middleware('auth');
